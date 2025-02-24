@@ -1,0 +1,46 @@
+﻿@model StudentViewModel
+@{
+    ViewData["Title"] = "Student List";
+}
+
+<h1>Student List</h1>
+
+@if (Model.AccessLevel < 2)
+{
+    <div class="text-center">
+        <h1 class="display-4">You do not have a sufficient access level to view this data.</h1>
+    </div>
+}
+else
+{
+    @if (Model.AccessLevel >= 8)
+    {
+        <div class="text-center">
+            <h1 class="display-4">Hello Admin.</h1>
+        </div>
+    }
+
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                @if (Model.AccessLevel >= 8)
+                {
+                    <th>Grade</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var student in Model.Students)
+            {
+                <tr>
+                    <td>@student.FirstName @student.LastName</td>
+                    @if (Model.AccessLevel >= 8)
+                    {
+                        <td>@student.Grade%</td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+}
