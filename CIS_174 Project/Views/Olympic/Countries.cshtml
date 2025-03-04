@@ -1,0 +1,53 @@
+﻿@model IEnumerable<CIS_174_Project.Models.Olympics.Country>
+
+@using CIS_174_Project.Models.Olympics;
+@{
+    Layout = "~/Views/Shared/_LayoutOlympics.cshtml";
+    ViewData["Title"] = "Olympic Games Countries";
+    string Active(string filter, string selected) {
+        return (filter.ToLower() == selected.ToLower() ? "active" : "");
+    }
+}
+<div class="row">
+    <div class="col-md-3">
+        <h3 class="mt-3">Sport Type</h3>
+        <div class="list-group">
+            <a asp-action="Countries" 
+                asp-route-activeSportType="all" 
+                asp-route-activeGameType="@ViewBag.ActiveGameType"
+                class="list-group-item @Active("all", ViewBag.ActiveSportType)">All</a>
+
+            @foreach (SportType type in ViewBag.SportTypes) {
+                <a asp-action="Countries"
+                   asp-route-activeSportType="@type.SportTypeID"
+                   asp-route-activeGameType="@ViewBag.ActiveGameType"
+                   class="list-group-item @Active(type.SportTypeID, ViewBag.ActiveSportType)">@type.Name</a>
+            }
+        </div>
+
+        <h3 class="mt-3">Game Type</h3>
+        <div class="list-group">
+            <a asp-action="Countries"
+               asp-route-activeSportType="@ViewBag.ActiveSportType"
+               asp-route-activeGameType="all"
+               class="list-group-item @Active("all", ViewBag.ActiveGameType)">All</a>
+
+            @foreach (GameType type in ViewBag.GameTypes)
+            {
+                <a asp-action="Countries"
+                   asp-route-activeSportType="@ViewBag.ActiveSportType"
+                   asp-route-activeGameType="@type.GameTypeID"
+                   class="list-group-item @Active(type.GameTypeID, ViewBag.ActiveGameType)">@type.Name</a>
+            }
+        </div>
+    </div>
+    <div class="col-md-9">
+        <ul class="list-inline">
+            @foreach (Country country in Model) {
+                <li class="list-inline-item">
+                    <img src="@Url.Content(country.CountryFlag)" alt="@country.Name" title="@country.Name | @country.SportType.Name @country.GameType.Name" />
+                </li>
+            }
+        </ul>
+    </div>
+</div>

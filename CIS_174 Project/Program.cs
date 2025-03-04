@@ -1,3 +1,6 @@
+using CIS_174_Project.Models.Olympics;
+using Microsoft.EntityFrameworkCore;
+
 namespace CIS_174_Project
 {
     public class Program
@@ -8,6 +11,9 @@ namespace CIS_174_Project
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddDbContext<CountryContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("ContryContext")));
 
             var app = builder.Build();
 
@@ -25,6 +31,10 @@ namespace CIS_174_Project
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.MapControllerRoute(
+                name: "olympicsRoute",
+                pattern: "{controller=Home}/{action=Index}/type-{activeSportType=all}/game-{activeGameType=all}");
 
             app.MapControllerRoute(
                 name: "default",

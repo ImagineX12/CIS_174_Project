@@ -1,5 +1,7 @@
 using System.Diagnostics;
+using System.Reflection.Metadata.Ecma335;
 using CIS_174_Project.Models;
+using CIS_174_Project.Models.Olympics;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CIS_174_Project.Controllers
