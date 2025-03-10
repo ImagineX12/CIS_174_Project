@@ -1,12 +1,9 @@
-﻿@model IEnumerable<CIS_174_Project.Models.Olympics.Country>
+﻿@model CIS_174_Project.Models.Olympics.CountriesViewModel
 
 @using CIS_174_Project.Models.Olympics;
 @{
     Layout = "~/Views/Shared/_LayoutOlympics.cshtml";
     ViewData["Title"] = "Olympic Games Countries";
-    string Active(string filter, string selected) {
-        return (filter.ToLower() == selected.ToLower() ? "active" : "");
-    }
 }
 <div class="row">
     <div class="col-md-3">
@@ -14,38 +11,40 @@
         <div class="list-group">
             <a asp-action="Countries" 
                 asp-route-activeSportType="all" 
-                asp-route-activeGameType="@ViewBag.ActiveGameType"
-                class="list-group-item @Active("all", ViewBag.ActiveSportType)">All</a>
+                asp-route-activeGameType="@Model.ActiveGameType"
+               class="list-group-item @Model.CheckActiveSportType("all")">All</a>
 
-            @foreach (SportType type in ViewBag.SportTypes) {
+            @foreach (SportType type in Model.SportTypes) {
                 <a asp-action="Countries"
                    asp-route-activeSportType="@type.SportTypeID"
-                   asp-route-activeGameType="@ViewBag.ActiveGameType"
-                   class="list-group-item @Active(type.SportTypeID, ViewBag.ActiveSportType)">@type.Name</a>
+                   asp-route-activeGameType="@Model.ActiveGameType"
+                   class="list-group-item @Model.CheckActiveSportType(type.SportTypeID)">@type.Name</a>
             }
         </div>
 
         <h3 class="mt-3">Game Type</h3>
         <div class="list-group">
             <a asp-action="Countries"
-               asp-route-activeSportType="@ViewBag.ActiveSportType"
+               asp-route-activeSportType="@Model.ActiveSportType"
                asp-route-activeGameType="all"
-               class="list-group-item @Active("all", ViewBag.ActiveGameType)">All</a>
+               class="list-group-item @Model.CheckActiveGameType("all")">All</a>
 
-            @foreach (GameType type in ViewBag.GameTypes)
+            @foreach (GameType type in Model.GameTypes)
             {
                 <a asp-action="Countries"
-                   asp-route-activeSportType="@ViewBag.ActiveSportType"
+                   asp-route-activeSportType="@Model.ActiveSportType"
                    asp-route-activeGameType="@type.GameTypeID"
-                   class="list-group-item @Active(type.GameTypeID, ViewBag.ActiveGameType)">@type.Name</a>
+                   class="list-group-item @Model.CheckActiveGameType(type.GameTypeID)">@type.Name</a>
             }
         </div>
     </div>
     <div class="col-md-9">
         <ul class="list-inline">
-            @foreach (Country country in Model) {
+            @foreach (Country country in Model.Countries) {
                 <li class="list-inline-item">
-                    <img src="@Url.Content(country.CountryFlag)" alt="@country.Name" title="@country.Name | @country.SportType.Name @country.GameType.Name" />
+                    <a asp-action="Details" asp-route-id="@country.CountryID">
+                        <img src="~/images/olympics/@Url.Content(country.CountryFlag)" alt="@country.Name" title="@country.Name | @country.SportType.Name @country.GameType.Name" />
+                    </a>
                 </li>
             }
         </ul>

@@ -38,7 +38,7 @@ namespace CIS_174_Project.Models.Olympics
                     Name = "Canada",
                     SportTypeID = "indoor",
                     GameTypeID = "winter",
-                    CountryFlag = "~/images/olympics/ca.png"
+                    CountryFlag = "ca.png"
                 },
                 new
                 {
@@ -46,7 +46,7 @@ namespace CIS_174_Project.Models.Olympics
                     Name = "Sweden",
                     SportTypeID = "indoor",
                     GameTypeID = "winter",
-                    CountryFlag = "~/images/olympics/se.png"
+                    CountryFlag = "se.png"
                 },
                 new
                 {
@@ -54,7 +54,7 @@ namespace CIS_174_Project.Models.Olympics
                     Name = "Great Britain",
                     SportTypeID = "indoor",
                     GameTypeID = "winter",
-                    CountryFlag = "~/images/olympics/gb.png"
+                    CountryFlag = "gb.png"
                 },
                 new
                 {
@@ -62,7 +62,7 @@ namespace CIS_174_Project.Models.Olympics
                     Name = "Jamaica",
                     SportTypeID = "outdoor",
                     GameTypeID = "winter",
-                    CountryFlag = "~/images/olympics/jm.png"
+                    CountryFlag = "jm.png"
                 },
                 new
                 {
@@ -70,7 +70,7 @@ namespace CIS_174_Project.Models.Olympics
                     Name = "Italy",
                     SportTypeID = "outdoor",
                     GameTypeID = "winter",
-                    CountryFlag = "~/images/olympics/it.png"
+                    CountryFlag = "it.png"
                 },
                 new
                 {
@@ -78,7 +78,7 @@ namespace CIS_174_Project.Models.Olympics
                     Name = "Japan",
                     SportTypeID = "outdoor",
                     GameTypeID = "winter",
-                    CountryFlag = "~/images/olympics/jp.png"
+                    CountryFlag = "jp.png"
                 },
                 new
                 {
@@ -86,7 +86,7 @@ namespace CIS_174_Project.Models.Olympics
                     Name = "Germany",
                     SportTypeID = "indoor",
                     GameTypeID = "summer",
-                    CountryFlag = "~/images/olympics/de.png"
+                    CountryFlag = "de.png"
                 },
                 new
                 {
@@ -94,7 +94,7 @@ namespace CIS_174_Project.Models.Olympics
                     Name = "China",
                     SportTypeID = "indoor",
                     GameTypeID = "summer",
-                    CountryFlag = "~/images/olympics/cn.png"
+                    CountryFlag = "cn.png"
                 },
                 new
                 {
@@ -102,7 +102,7 @@ namespace CIS_174_Project.Models.Olympics
                     Name = "Mexico",
                     SportTypeID = "indoor",
                     GameTypeID = "summer",
-                    CountryFlag = "~/images/olympics/mx.png"
+                    CountryFlag = "mx.png"
                 },
                 new
                 {
@@ -110,7 +110,7 @@ namespace CIS_174_Project.Models.Olympics
                     Name = "Brazil",
                     SportTypeID = "outdoor",
                     GameTypeID = "summer",
-                    CountryFlag = "~/images/olympics/br.png"
+                    CountryFlag = "br.png"
                 },
                 new
                 {
@@ -118,7 +118,7 @@ namespace CIS_174_Project.Models.Olympics
                     Name = "Netherlands",
                     SportTypeID = "outdoor",
                     GameTypeID = "summer",
-                    CountryFlag = "~/images/olympics/nl.png"
+                    CountryFlag = "nl.png"
                 },
                 new
                 {
@@ -126,7 +126,7 @@ namespace CIS_174_Project.Models.Olympics
                     Name = "USA",
                     SportTypeID = "outdoor",
                     GameTypeID = "summer",
-                    CountryFlag = "~/images/olympics/us.png"
+                    CountryFlag = "us.png"
                 },
                 new
                 {
@@ -134,7 +134,7 @@ namespace CIS_174_Project.Models.Olympics
                     Name = "Thailand",
                     SportTypeID = "indoor",
                     GameTypeID = "paralympic",
-                    CountryFlag = "~/images/olympics/th.png"
+                    CountryFlag = "th.png"
                 },
                 new
                 {
@@ -142,7 +142,7 @@ namespace CIS_174_Project.Models.Olympics
                     Name = "Uruguay",
                     SportTypeID = "indoor",
                     GameTypeID = "paralympic",
-                    CountryFlag = "~/images/olympics/uy.png"
+                    CountryFlag = "uy.png"
                 },
                 new
                 {
@@ -150,7 +150,7 @@ namespace CIS_174_Project.Models.Olympics
                     Name = "Ukraine",
                     SportTypeID = "indoor",
                     GameTypeID = "paralympic",
-                    CountryFlag = "~/images/olympics/ua.png"
+                    CountryFlag = "ua.png"
                 },
                 new
                 {
@@ -158,7 +158,7 @@ namespace CIS_174_Project.Models.Olympics
                     Name = "Austria",
                     SportTypeID = "outdoor",
                     GameTypeID = "paralympic",
-                    CountryFlag = "~/images/olympics/at.png"
+                    CountryFlag = "at.png"
                 },
                 new
                 {
@@ -166,7 +166,7 @@ namespace CIS_174_Project.Models.Olympics
                     Name = "Pakistan",
                     SportTypeID = "outdoor",
                     GameTypeID = "paralympic",
-                    CountryFlag = "~/images/olympics/pk.png"
+                    CountryFlag = "pk.png"
                 },
                 new
                 {
@@ -174,7 +174,7 @@ namespace CIS_174_Project.Models.Olympics
                     Name = "Zimbabwe",
                     SportTypeID = "outdoor",
                     GameTypeID = "paralympic",
-                    CountryFlag = "~/images/olympics/zw.png"
+                    CountryFlag = "zw.png"
                 },
                 new
                 {
@@ -182,7 +182,7 @@ namespace CIS_174_Project.Models.Olympics
                     Name = "France",
                     SportTypeID = "indoor",
                     GameTypeID = "youth",
-                    CountryFlag = "~/images/olympics/fr.png"
+                    CountryFlag = "fr.png"
                 },
                 new
                 {
@@ -190,7 +190,7 @@ namespace CIS_174_Project.Models.Olympics
                     Name = "Cyprus",
                     SportTypeID = "indoor",
                     GameTypeID = "youth",
-                    CountryFlag = "~/images/olympics/cy.png"
+                    CountryFlag = "cy.png"
                 },
                 new
                 {
@@ -198,7 +198,7 @@ namespace CIS_174_Project.Models.Olympics
                     Name = "Russia",
                     SportTypeID = "indoor",
                     GameTypeID = "youth",
-                    CountryFlag = "~/images/olympics/ru.png"
+                    CountryFlag = "ru.png"
                 },
                 new
                 {
@@ -206,7 +206,7 @@ namespace CIS_174_Project.Models.Olympics
                     Name = "Finland",
                     SportTypeID = "outdoor",
                     GameTypeID = "youth",
-                    CountryFlag = "~/images/olympics/fi.png"
+                    CountryFlag = "fi.png"
                 },
                 new
                 {
@@ -214,7 +214,7 @@ namespace CIS_174_Project.Models.Olympics
                     Name = "Slovakia",
                     SportTypeID = "outdoor",
                     GameTypeID = "youth",
-                    CountryFlag = "~/images/olympics/sk.png"
+                    CountryFlag = "sk.png"
                 },
                 new
                 {
@@ -222,7 +222,7 @@ namespace CIS_174_Project.Models.Olympics
                     Name = "Portugal",
                     SportTypeID = "outdoor",
                     GameTypeID = "youth",
-                    CountryFlag = "~/images/olympics/pt.png"
+                    CountryFlag = "pt.png"
                 }
             );
         }

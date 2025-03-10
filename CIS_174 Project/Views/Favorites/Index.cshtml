@@ -1,0 +1,37 @@
+﻿@using CIS_174_Project.Models.Olympics;
+@model CountriesViewModel
+@{
+    Layout = "~/Views/Shared/_LayoutOlympics.cshtml";
+    ViewData["Title"] = "Favorites";
+}
+
+<div class="text-center mb-4">
+    <h2>My Favorites</h2>
+    <form asp-action="Delete" method="post">
+        <a asp-action="Countries" asp-controller="Olympic" class="btn btn-primary" asp-route-activeSportType="@Model.ActiveSportType" asp-route-activeGameType="@Model.ActiveGameType">Return to Home Page</a>
+        <button type="submit" class="btn btn-primary">Clear Favorites</button>
+    </form>
+</div>
+
+<div class="row">
+    <div class="col offset-2">
+        <ul class="list-group">
+            @foreach (Country country in Model.Countries)
+            {
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <img src="~/images/olympics/@country.CountryFlag" alt="" />
+                        </div>
+                        <div class="col-sm-4">
+                            @country.Name
+                        </div>
+                        <div class="col-sm-4">
+                            @country.SportType.Name @country.GameType.Name
+                        </div>
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
+</div>

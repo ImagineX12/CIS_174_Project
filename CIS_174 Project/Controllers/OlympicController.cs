@@ -1,5 +1,6 @@
 ﻿using CIS_174_Project.Models.Olympics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Reflection.Metadata.Ecma335;
 
 namespace CIS_174_Project.Controllers
@@ -13,25 +14,38 @@ namespace CIS_174_Project.Controllers
             context = ctx;
         }
 
-        public ViewResult Countries(string activeSportType = "all", string activeGameType = "all")
+        public ViewResult Countries(CountriesViewModel model)
         {
-            ViewBag.ActiveSportType = activeSportType;
-            ViewBag.ActiveGameType = activeGameType;
+            var session = new OlympicSession(HttpContext.Session);
+            session.SetActiveSport(model.ActiveSportType);
+            session.SetActiveGame(model.ActiveGameType);
 
-            ViewBag.SportTypes = context.SportTypes.ToList();
-            ViewBag.GameTypes = context.GameTypes.ToList();
+            model.SportTypes = context.SportTypes.ToList();
+            model.GameTypes = context.GameTypes.ToList();
 
             IQueryable<Country> query = context.Countries.OrderBy(t => t.Name);
 
-            if (activeSportType != "all")
-                query = query.Where(t => t.SportType.SportTypeID.ToLower() == activeSportType.ToLower());
+            if (model.ActiveSportType != "all")
+                query = query.Where(t => t.SportType.SportTypeID.ToLower() == model.ActiveSportType.ToLower());
 
-            if (activeGameType != "all")
-                query = query.Where(t => t.GameType.GameTypeID.ToLower() == activeGameType.ToLower());
+            if (model.ActiveGameType != "all")
+                query = query.Where(t => t.GameType.GameTypeID.ToLower() == model.ActiveGameType.ToLower());
 
-            var countries = query.ToList();
+            model.Countries = query.ToList();
 
-            return View(countries);
+            return View(model);
+        }
+
+        public IActionResult Details(string id)
+        {
+            var session = new OlympicSession(HttpContext.Session);
+            var model = new CountriesViewModel
+            {
+                Country = context.Countries.Include(t => t.SportType).Include(t => t.GameType).FirstOrDefault(t => t.CountryID == id) ?? new Country(),
+                ActiveSportType = session.GetActiveSport(),
+                ActiveGameType = session.GetActiveGame()
+            };
+            return View(model);
         }
     }
 }

@@ -9,6 +9,9 @@ namespace CIS_174_Project
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Services.AddMemoryCache();
+            builder.Services.AddSession();
+
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
@@ -31,6 +34,8 @@ namespace CIS_174_Project
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseSession();
 
             app.MapControllerRoute(
                 name: "olympicsRoute",
