@@ -1,4 +1,5 @@
 using CIS_174_Project.Models.Olympics;
+using CIS_174_Project.Models.ToDoList;
 using Microsoft.EntityFrameworkCore;
 
 namespace CIS_174_Project
@@ -17,6 +18,9 @@ namespace CIS_174_Project
 
             builder.Services.AddDbContext<CountryContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ContryContext")));
+
+            builder.Services.AddDbContext<ToDoContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("ToDoContext")));
 
             var app = builder.Build();
 
