@@ -1,5 +1,6 @@
 using CIS_174_Project.Models.Olympics;
 using CIS_174_Project.Models.ToDoList;
+using CIS_174_Project.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace CIS_174_Project
@@ -21,6 +22,8 @@ namespace CIS_174_Project
 
             builder.Services.AddDbContext<ToDoContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ToDoContext")));
+
+            builder.Services.AddScoped(typeof(IRepository<>), typeof(EFRepository<>));
 
             var app = builder.Build();
 

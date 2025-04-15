@@ -2,13 +2,21 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
+using System.Linq;
+using CIS_174_Project.Services;
 
 namespace CIS_174_Project.Controllers
 {
     public class ToDoController : Controller
     {
-        private ToDoContext context;
-        public ToDoController(ToDoContext ctx) => context = ctx;
+        private readonly IRepository<ToDo> _toDoRepo;
+        private readonly IRepository<Status> _statusRepo;
+
+        public ToDoController(IRepository<ToDo> toDoRepo, IRepository<Status> statusRepo)
+        {
+            _toDoRepo = toDoRepo;
+            _statusRepo = statusRepo;
+        }
 
         public IActionResult Index(string id)
         {
@@ -16,9 +24,9 @@ namespace CIS_174_Project.Controllers
 
 
             ViewBag.Filter = id;
-            ViewBag.Statuses = context.Statuses.ToList();
+            ViewBag.Statuses = _statusRepo.List.ToList();
 
-            IQueryable<ToDo> query = context.ToDos.Include(t => t.Status);
+            IQueryable<ToDo> query = _toDoRepo.List.Include(t => t.Status);
             if (filter != "all")
             {
                 query = query.Where(t => t.StatusId == filter);
@@ -31,7 +39,7 @@ namespace CIS_174_Project.Controllers
         [HttpGet]
         public IActionResult Add()
         {
-            ViewBag.Statuses = context.Statuses.ToList();
+            ViewBag.Statuses = _statusRepo.List.ToList();
             var task = new ToDo { StatusId = "open" };
             return View(task);
         }
@@ -41,13 +49,13 @@ namespace CIS_174_Project.Controllers
         {
             if (ModelState.IsValid)
             {
-                context.ToDos.Add(task);
-                context.SaveChanges();
+                _toDoRepo.Insert(task);
+                _toDoRepo.Save();
                 return RedirectToAction("Index");
             }
             else
             {
-                ViewBag.Statuses = context.Statuses.ToList();
+                ViewBag.Statuses = _statusRepo.List.ToList();
                 return View(task);
             }
         }
@@ -61,39 +69,39 @@ namespace CIS_174_Project.Controllers
         [HttpPost]
         public IActionResult MarkComplete([FromRoute] string id, ToDo selected)
         {
-            selected = context.ToDos.Find(selected.Id);
-            if (selected != null)
+            var existingTask = _toDoRepo.List.FirstOrDefault(t => t.Id == selected.Id);
+
+            if (existingTask != null)
             {
-                if (selected.StatusId == "todo")
+                if (existingTask.StatusId == "todo")
                 {
-                    selected.StatusId = "inprogress";
-                    context.SaveChanges();
+                    existingTask.StatusId = "inprogress";
                 }
-                else if (selected.StatusId == "inprogress")
+                else if (existingTask.StatusId == "inprogress")
                 {
-                    selected.StatusId = "qa";
-                    context.SaveChanges();
+                    existingTask.StatusId = "qa";
                 }
-                else if (selected.StatusId == "qa")
+                else if (existingTask.StatusId == "qa")
                 {
-                    selected.StatusId = "done";
-                    context.SaveChanges();
+                    existingTask.StatusId = "done";
                 }
+
+                _toDoRepo.Save();
             }
 
-            return RedirectToAction("Index", new { ID = id});
+            return RedirectToAction("Index", new { ID = id });
         }
 
         [HttpPost]
         public IActionResult DeleteComplete(string id)
         {
-            var toDelete = context.ToDos.Where(t => t.StatusId == "done").ToList();
+            var toDelete = _toDoRepo.List.Where(t => t.StatusId == "done").ToList();
 
             foreach (var task in toDelete)
             {
-                context.ToDos.Remove(task);
+                _toDoRepo.Delete(task);
             }
-            context.SaveChanges();
+            _toDoRepo.Save();
 
             return RedirectToAction("Index", new { ID = id });
         }
