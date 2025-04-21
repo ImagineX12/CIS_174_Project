@@ -1,0 +1,18 @@
+﻿@{
+    string statusId = ViewBag.StatusId?.ToString().ToLower();
+    int id = (int)ViewBag.Id;
+    string buttonText = statusId switch
+    {
+        "todo" => "Mark In Progress",
+        "inprogress" => "Mark Under QA",
+        "qa" => "Mark As Done",
+        _ => "Update"
+    };
+}
+
+<button type="submit"
+        name="Id"
+        value="@id"
+        class="btn btn-primary btn-sm">
+    @buttonText
+</button>

@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<CIS_174_Project.Models.ToDoList.ToDo>
 @{
-    @using static CIS_174_Project.Models.ToDoList.ToDo;
+@using static CIS_174_Project.Models.ToDoList.ToDo;
     Layout = "~/Views/Shared/_ToDoLayout.cshtml";
 }
 
@@ -41,18 +41,7 @@
                             <td>@task.PointValue</td>
                             <td>@task.Status.Name</td>
                             <td>
-                                @if (task.StatusId == "todo")
-                                {
-                                    <button type="submit" class="btn btn-primary btn-sm" name="@nameof(CIS_174_Project.Models.ToDoList.ToDo.Id)" value="@task.Id">Mark In Progress</button>
-                                }
-                                else if (task.StatusId == "inprogress")
-                                {
-                                    <button type="submit" class="btn btn-primary btn-sm" name="@nameof(CIS_174_Project.Models.ToDoList.ToDo.Id)" value="@task.Id">Mark Under QA</button>
-                                }
-                                else if (task.StatusId == "qa")
-                                {
-                                    <button type="submit" class="btn btn-primary btn-sm" name="@nameof(CIS_174_Project.Models.ToDoList.ToDo.Id)" value="@task.Id">Mark As Done</button>
-                                }
+                                @await Component.InvokeAsync("StatusButton", new { statusId = task.StatusId, id = task.Id })
                             </td>
                         </tr>
                     }
@@ -62,7 +51,8 @@
 
         <form asp-action="DeleteComplete" method="post" asp-route-id="@ViewBag.Filter">
             <a asp-action="Add" class="btn btn-primary">Add new task</a>
-            <button type="submit" class="btn btn-primary">Delete completed tasks</button>
+
+            <styled-submit class="me-2">Delete completed tasks</styled-submit>
         </form>
     </div>
 </div>
