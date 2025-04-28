@@ -1,5 +1,8 @@
 ﻿<!DOCTYPE html>
 <html>
+@using Microsoft.AspNetCore.Identity;
+@inject SignInManager<CIS_174_Project.Models.ToDoList.ToDoUser> signInManager
+
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
@@ -8,10 +11,36 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
         <title>My Tasks</title>
     </head>
-    <body>
-        <div class="container">
-            <header class="bg-primary text-white text-center">
+<body>
+    <div class="container">
+        <header class="bg-primary text-white text-center">
+            <ul class="navbar">
                 <h1 class="m-3 p-3">My Tasks</h1>
+                @if (signInManager.IsSignedIn(User))
+                {
+                    <li class="nav-item">
+                        <form method="post" asp-action="Logout" asp-controller="Account" asp-area="">
+                            <input type="submit" value="Log Out" class="btn btn-outline-light" />
+                            <span class="text-light">@User.Identity.Name</span>
+                        </form>
+                    </li>
+                }
+                else
+                {
+                    var action = ViewContext.RouteData.Values["action"]?.ToString();
+
+                    <li class="nav-item @Nav.Active("Register", action)">
+                        <a asp-action="Register" asp-controller="Account" asp-area="" class="nav-link text-light">
+                            <span class="fas fa-edit"></span>&nbsp;Register
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-action="Login" asp-controller="Account" asp-area="" class="btn btnbtn-outline-light">Log In</a>
+                    </li>
+                }
+            </ul>
+            
+
             </header>
             <main>
                 @RenderBody()

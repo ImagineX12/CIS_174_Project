@@ -1,7 +1,9 @@
 using CIS_174_Project.Models.Olympics;
 using CIS_174_Project.Models.ToDoList;
 using CIS_174_Project.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace CIS_174_Project
 {
@@ -16,6 +18,19 @@ namespace CIS_174_Project
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddIdentity<ToDoUser, IdentityRole>(options =>
+            {
+                options.Password.RequiredLength = 6;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireDigit = false;
+            }).AddEntityFrameworkStores<ToDoContext>().AddDefaultTokenProviders();
+
+            builder.Services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Account/Login";
+                options.AccessDeniedPath = "/Account/AccessDenied";
+            });
 
             builder.Services.AddDbContext<CountryContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ContryContext")));
@@ -43,6 +58,9 @@ namespace CIS_174_Project
             app.UseAuthorization();
 
             app.UseSession();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.MapControllerRoute(
                 name: "olympicsRoute",

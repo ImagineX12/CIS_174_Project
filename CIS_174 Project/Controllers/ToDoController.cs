@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using System.Linq;
 using CIS_174_Project.Services;
+using Microsoft.AspNetCore.Identity;
 
 namespace CIS_174_Project.Controllers
 {
@@ -11,11 +12,13 @@ namespace CIS_174_Project.Controllers
     {
         private readonly IRepository<ToDo> _toDoRepo;
         private readonly IRepository<Status> _statusRepo;
+        private readonly UserManager<ToDoUser> _userManager;
 
-        public ToDoController(IRepository<ToDo> toDoRepo, IRepository<Status> statusRepo)
+        public ToDoController(IRepository<ToDo> toDoRepo, IRepository<Status> statusRepo, UserManager<ToDoUser> userManager)
         {
             _toDoRepo = toDoRepo;
             _statusRepo = statusRepo;
+            _userManager = userManager;
         }
 
         public IActionResult Index(string id)
@@ -26,12 +29,24 @@ namespace CIS_174_Project.Controllers
             ViewBag.Filter = id;
             ViewBag.Statuses = _statusRepo.List.ToList();
 
-            IQueryable<ToDo> query = _toDoRepo.List.Include(t => t.Status);
-            if (filter != "all")
+            
+            var userId = _userManager.GetUserId(User);
+
+            if (userId == null)
             {
-                query = query.Where(t => t.StatusId == filter);
+                userId = "null";
             }
 
+                IQueryable<ToDo> query = _toDoRepo.List.Include(t => t.Status);
+            if (filter != "all")
+            {
+                query = query.Where(t => t.StatusId == filter).Where(t => t.UserId == userId);
+            }
+            else
+            {
+                query = query.Where(t => t.UserId == userId);
+            }
+            
             var tasks = query.OrderBy(t => t.SprintNumber).ToList();
             return View(tasks);
         }
@@ -49,6 +64,15 @@ namespace CIS_174_Project.Controllers
         {
             if (ModelState.IsValid)
             {
+                var userId = _userManager.GetUserId(User);
+
+                if (userId == null)
+                {
+                    userId = "null";
+                }
+
+                task.UserId = userId;
+
                 _toDoRepo.Insert(task);
                 _toDoRepo.Save();
                 return RedirectToAction("Index");

@@ -1,11 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace CIS_174_Project.Models.ToDoList
 {
     public class ToDo
     {
         public int Id { get; set; }
+
+        
 
         [Required(ErrorMessage = "Please enter a name.")]
         [MaxLength(50, ErrorMessage = "Name can't be over 50 characters long.")]
@@ -28,5 +31,7 @@ namespace CIS_174_Project.Models.ToDoList
         [ValidateNever]
         public Status Status { get; set; } = null!;
 
+        [ValidateNever]
+        public string UserId { get; set; }
     }
 }

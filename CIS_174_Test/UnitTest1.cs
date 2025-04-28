@@ -8,6 +8,7 @@ using CIS_174_Project.Models;
 using CIS_174_Project.Models.ToDoList;
 using Moq;
 using CIS_174_Project.Services;
+using Microsoft.AspNetCore.Identity;
 
 
 namespace CIS_174_Test
@@ -15,6 +16,13 @@ namespace CIS_174_Test
     public class UnitTest1
     {
         //Returns Data for the test
+        private Mock<UserManager<ToDoUser>> GetMockUserManager()
+        {
+            var store = new Mock<IUserStore<ToDoUser>>();
+            return new Mock<UserManager<ToDoUser>>(
+                store.Object, null, null, null, null, null, null, null, null);
+        }
+
         private List<Status> GetFakeStatuses() => new List<Status>
         {
             new Status { StatusId = "todo", Name = "To Do" },
@@ -37,7 +45,8 @@ namespace CIS_174_Test
             mockStatusRepo.Setup(r => r.List).Returns(GetFakeStatuses().AsQueryable());
 
             var mockToDoRepo = new Mock<IRepository<ToDo>>();
-            var controller = new ToDoController(mockToDoRepo.Object, mockStatusRepo.Object);
+            var mockUserManager = GetMockUserManager();
+            var controller = new ToDoController(mockToDoRepo.Object, mockStatusRepo.Object, mockUserManager.Object);
 
             var result = controller.Add() as ViewResult;
 
@@ -53,7 +62,8 @@ namespace CIS_174_Test
             var mockToDoRepo = new Mock<IRepository<ToDo>>();
             var mockStatusRepo = new Mock<IRepository<Status>>();
 
-            var controller = new ToDoController(mockToDoRepo.Object, mockStatusRepo.Object);
+            var mockUserManager = GetMockUserManager();
+            var controller = new ToDoController(mockToDoRepo.Object, mockStatusRepo.Object, mockUserManager.Object);
             var task = new ToDo { Id = 3, Description = "New Task", StatusId = "todo" };
 
             var result = controller.Add(task) as RedirectToActionResult;
@@ -72,7 +82,8 @@ namespace CIS_174_Test
             var todoList = GetFakeToDos().AsQueryable();
             mockToDoRepo.Setup(r => r.List).Returns(todoList);
 
-            var controller = new ToDoController(mockToDoRepo.Object, mockStatusRepo.Object);
+            var mockUserManager = GetMockUserManager();
+            var controller = new ToDoController(mockToDoRepo.Object, mockStatusRepo.Object, mockUserManager.Object);
 
             var result = controller.MarkComplete("todo", new ToDo { Id = 1 }) as RedirectToActionResult;
 
@@ -90,7 +101,8 @@ namespace CIS_174_Test
 
             mockToDoRepo.Setup(r => r.List).Returns(toDos.AsQueryable());
 
-            var controller = new ToDoController(mockToDoRepo.Object, mockStatusRepo.Object);
+            var mockUserManager = GetMockUserManager();
+            var controller = new ToDoController(mockToDoRepo.Object, mockStatusRepo.Object, mockUserManager.Object);
 
             var result = controller.DeleteComplete("done") as RedirectToActionResult;
 
@@ -105,7 +117,8 @@ namespace CIS_174_Test
             var mockToDoRepo = new Mock<IRepository<ToDo>>();
             var mockStatusRepo = new Mock<IRepository<Status>>();
 
-            var controller = new ToDoController(mockToDoRepo.Object, mockStatusRepo.Object);
+            var mockUserManager = GetMockUserManager();
+            var controller = new ToDoController(mockToDoRepo.Object, mockStatusRepo.Object, mockUserManager.Object);
             var result = controller.Filter("qa") as RedirectToActionResult;
 
             Assert.Equal("Index", result.ActionName);
